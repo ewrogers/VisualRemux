@@ -16,7 +16,19 @@
         <vm:MainWindowViewModel/>
     </Design.DataContext>
 
-    <TextBlock Text="{Binding Greeting}" 
-               HorizontalAlignment="Center" VerticalAlignment="Center"/>
+    <Grid ColumnDefinitions="240 *">
+        
+        <!-- Sidebar -->
+        <Border Grid.Column="0">
+            <Panel>
+            
+            </Panel>
+        </Border>
+        
+        <!-- Main Content Area -->
+        <Panel Grid.Column="1">
+            
+        </Panel>
+    </Grid>
 
 </Window>
