@@ -4,7 +4,99 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="VisualRemux.App.Views.RemuxToolView">
-    <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-        <Label Theme="{DynamicResource TitleLabel}" Classes="H3" HorizontalAlignment="Center">This is the Remux tool.</Label>
-    </StackPanel>
+    <Grid RowDefinitions="* Auto">
+        <!-- Scrollable Content Area -->
+        <ScrollViewer Grid.Row="0" HorizontalScrollBarVisibility="Disabled" Padding="0,0,8,0">
+            <StackPanel Margin="16" Spacing="16">
+                <!-- File List -->
+                <Border BorderBrush="{DynamicResource BorderCardBorderBrush}"
+                        BorderThickness="1"
+                        CornerRadius="4">
+                    <StackPanel>
+                        <DockPanel Margin="8">
+                            <TextBlock Text="Input Files" FontWeight="Bold" VerticalAlignment="Center" Margin="4,0"/>
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Spacing="8">
+                                <Button Content="Add Files"/>
+                                <Button Content="Remove Selected" Classes="Danger"/>
+                            </StackPanel>
+                        </DockPanel>
+                        <Panel Height="1" Background="{DynamicResource BorderCardBorderBrush}"/>
+                        <ListBox Height="320" SelectionMode="Multiple,Toggle" Padding="1">
+                            <ListBox.Items>
+                                <ListBoxItem Content="First Item"/>
+                                <ListBoxItem Content="Second Item"/>  
+                                <ListBoxItem Content="Third Item"/>  
+                            </ListBox.Items>
+                        </ListBox>
+                    </StackPanel>
+                </Border>
+                
+                <!-- Remux Options -->
+                <Border BorderBrush="{DynamicResource BorderCardBorderBrush}"
+                        BorderThickness="1"
+                        CornerRadius="4">
+                    <StackPanel>
+                        <DockPanel Margin="8">
+                            <TextBlock Text="Remux Options" FontWeight="Bold" VerticalAlignment="Center" Margin="4,0"/>
+                        </DockPanel>
+                        <Panel Height="1" Background="{DynamicResource BorderCardBorderBrush}"/>
+                        <StackPanel Spacing="8" Margin="24">
+                            <!-- Output Container Options -->
+                            <StackPanel Orientation="Horizontal" Spacing="8">
+                                <Label Content="Output Container:" VerticalAlignment="Center"/>
+                                <ComboBox SelectedIndex="0" MinWidth="120">
+                                    <ComboBox.Items>
+                                        <ComboBoxItem Content="MP4"/>
+                                        <ComboBoxItem Content="MKV"/>
+                                    </ComboBox.Items>
+                                </ComboBox>
+                            </StackPanel>
+                        </StackPanel>
+                    </StackPanel>
+                </Border>
+                
+                <!-- Output Directory Options -->
+                <Border BorderBrush="{DynamicResource BorderCardBorderBrush}"
+                        BorderThickness="1"
+                        CornerRadius="4">
+                    <StackPanel>
+                        <DockPanel Margin="8">
+                            <TextBlock Text="Output Directory" FontWeight="Bold" VerticalAlignment="Center" Margin="4,0"/>
+                        </DockPanel>
+                        <Panel Height="1" Background="{DynamicResource BorderCardBorderBrush}"/>
+                        <StackPanel Spacing="8" Margin="24">
+                            <!-- Default Output Directory -->
+                            <RadioButton GroupName="OutputDirectory"
+                                         Content="Use Application Setting"
+                                         IsChecked="True"
+                                         VerticalAlignment="Center"/>
+                            <!-- Custom Output Directory -->
+                            <Grid ColumnDefinitions="Auto * Auto">
+                                <RadioButton Grid.Column="0" Name="CustomOutputDirectoryRadioButton"
+                                             GroupName="OutputDirectory"
+                                             Content="Output Directory:"
+                                             VerticalAlignment="Center"/>
+                                <TextBox Grid.Column="1" Text="C:\Users\CurrentUser\Videos"
+                                         IsEnabled="{Binding IsChecked, ElementName=CustomOutputDirectoryRadioButton}"
+                                         Margin="8,4"/>
+                                <Button Grid.Column="2" Content="Choose..."
+                                        IsEnabled="{Binding IsChecked, ElementName=CustomOutputDirectoryRadioButton}"/>
+                            </Grid>
+                        </StackPanel>
+                    </StackPanel>
+                </Border>
+                
+            </StackPanel>
+        </ScrollViewer>
+
+        <!-- Bottom Buttons -->
+        <Border Grid.Row="1"
+                BorderBrush="{DynamicResource BorderCardBorderBrush}"
+                BorderThickness="0,1, 0, 0"
+                Padding="16">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Spacing="16">
+                <Button Content="Add Files to Queue"/>
+            </StackPanel>
+        </Border>
+    </Grid>
 </UserControl>

@@ -1,25 +1,23 @@
 ﻿using System.Collections.ObjectModel;
-using System.Windows.Input;
-using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace VisualRemux.App.ViewModels;
 
-public class MainWindowViewModel : ViewModelBase
+public partial class MainWindowViewModel : ViewModelBase
 {
-    public ObservableCollection<ToolViewModel> Tools { get; } =
+    [ObservableProperty]
+    private ObservableCollection<ToolViewModel> _tools =
     [
         new RemuxToolViewModel()
     ];
 
+    [ObservableProperty]
     private ToolViewModel? _selectedTool = new LandingPageViewModel();
 
-    public ToolViewModel? SelectedTool
+    public MainWindowViewModel()
     {
-        get => _selectedTool;
-        set => SetProperty(ref _selectedTool, value);
+        SelectTool(_tools[0]);
     }
-
-    public ICommand SelectToolCommand => new RelayCommand<ToolViewModel>(SelectTool);
-
-    private void SelectTool(ToolViewModel? tool) => SelectedTool = tool;
+    
+    public void SelectTool(ToolViewModel? tool) => SelectedTool = tool;
 }

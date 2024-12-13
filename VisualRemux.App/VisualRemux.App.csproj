@@ -11,6 +11,7 @@
     </PropertyGroup>
 
     <ItemGroup>
+        <Folder Include="Controls\" />
         <Folder Include="Models\"/>
         <AvaloniaResource Include="Assets\**"/>
     </ItemGroup>
@@ -26,5 +27,9 @@
         </PackageReference>
         <PackageReference Include="CommunityToolkit.Mvvm" Version="8.3.2" />
         <PackageReference Include="Semi.Avalonia" Version="11.2.1.2" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <UpToDateCheckInput Remove="Controls\HeaderedExpander.axaml" />
     </ItemGroup>
 </Project>
