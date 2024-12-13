@@ -20,7 +20,11 @@
     <Grid ColumnDefinitions="240 *">
         
         <!-- Sidebar -->
-        <Border Grid.Column="0" BorderThickness="0,0,1,0" Padding="16">
+        <Border Grid.Column="0"
+                BorderBrush="{DynamicResource BorderCardBorderBrush}"
+                BorderThickness="0,0,1,0"
+                CornerRadius="0"
+                Padding="16">
             <Grid RowDefinitions="Auto, *, Auto">
 
                 <!-- Available Tools -->
