@@ -1,4 +1,5 @@
 ﻿using System.Collections.ObjectModel;
+using System.Linq;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 
@@ -8,16 +9,15 @@ public partial class MainWindowViewModel : ViewModelBase
 {
     private readonly OutputLogToolViewModel _outputLogTool = new();
 
-    [ObservableProperty] private ObservableCollection<ToolViewModel> _tools =
-    [
-        new RemuxToolViewModel()
-    ];
+    [ObservableProperty] private ObservableCollection<ToolViewModel> _tools = [];
 
     [ObservableProperty] private ToolViewModel? _selectedTool = new LandingPageViewModel();
 
-    public MainWindowViewModel()
+    public MainWindowViewModel(RemuxToolViewModel remuxToolViewModel)
     {
-        SelectTool(_tools[0]);
+        Tools.Add(remuxToolViewModel);
+
+        SelectTool(_tools.FirstOrDefault());
     }
 
     [RelayCommand]

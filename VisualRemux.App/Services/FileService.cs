@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Avalonia.Controls;
@@ -5,8 +6,15 @@ using Avalonia.Platform.Storage;
 
 namespace VisualRemux.App.Services;
 
-public class FileService(TopLevel topLevel) : IFileService
+public class FileService: IFileService
 {
+    private readonly Func<TopLevel> _topLevelResolver;
+
+    public FileService(Func<TopLevel> topLevelResolver)
+    {
+        _topLevelResolver = topLevelResolver;
+    }
+
     public async Task<IReadOnlyList<IStorageFile>?> OpenFilesAsync(string title,
         params IEnumerable<FilePickerFileType> fileTypes)
     {
@@ -21,6 +29,7 @@ public class FileService(TopLevel topLevel) : IFileService
             AllowMultiple = true,
         };
 
+        var topLevel = _topLevelResolver();
         var files = await topLevel.StorageProvider.OpenFilePickerAsync(options);
 
         return files.Count > 0 ? files : null;
@@ -33,6 +42,7 @@ public class FileService(TopLevel topLevel) : IFileService
             Title = title,
         };
 
+        var topLevel = _topLevelResolver();
         var folders = await topLevel.StorageProvider.OpenFolderPickerAsync(options);
         return folders.Count > 0 ? folders[0] : null;
     }

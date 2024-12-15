@@ -3,8 +3,10 @@ using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Data.Core.Plugins;
 using System.Linq;
+using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
 using Microsoft.Extensions.DependencyInjection;
+using VisualRemux.App.Logging;
 using VisualRemux.App.Services;
 using VisualRemux.App.ViewModels;
 using VisualRemux.App.Views;
@@ -14,18 +16,18 @@ namespace VisualRemux.App;
 public partial class App : Application
 {
     public new static App? Current => Application.Current as App;
-
+    
     public IServiceProvider Services { get; private set; } = null!;
+    public Window? MainWindow { get; private set; }
     
     public override void Initialize()
     {
         AvaloniaXamlLoader.Load(this);
+        Services = ConfigureServices();
     }
 
     public override void OnFrameworkInitializationCompleted()
     {
-        var services = new ServiceCollection();
-        
         if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {
             // Avoid duplicate validations from both Avalonia and the CommunityToolkit. 
@@ -35,19 +37,28 @@ public partial class App : Application
             desktop.MainWindow = new MainWindow
             {
                 Title = "VisualRemux",
-                DataContext = new MainWindowViewModel(),
+                DataContext = Services.GetService<MainWindowViewModel>()
             };
             
-            // Register desktop services
-            services.AddSingleton<IFileService>(x => new FileService(desktop.MainWindow));
+            MainWindow = desktop.MainWindow;
         }
-        
-        // Register view models
-        services.AddTransient<RemuxToolViewModel>();
-            
-        Services = services.BuildServiceProvider();
 
         base.OnFrameworkInitializationCompleted();
+    }
+
+    private static ServiceProvider ConfigureServices()
+    {
+        var services = new ServiceCollection();
+
+        // Register view models
+        services.AddTransient<MainWindowViewModel>();
+        services.AddTransient<RemuxToolViewModel>();
+
+        // Register services
+        services.AddSingleton<ILogger, Logger>();
+        services.AddSingleton<IFileService, FileService>(_ => new FileService(() => Current!.MainWindow!));
+
+        return services.BuildServiceProvider();
     }
 
     private static void DisableAvaloniaDataAnnotationValidation()

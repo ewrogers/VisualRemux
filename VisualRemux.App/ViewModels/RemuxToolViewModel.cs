@@ -4,13 +4,16 @@ using System.Linq;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using Microsoft.Extensions.DependencyInjection;
+using VisualRemux.App.Logging;
 using VisualRemux.App.Services;
 
 namespace VisualRemux.App.ViewModels;
 
 public partial class RemuxToolViewModel : ToolViewModel
 {
+    private readonly ILogger _logger;
+    private readonly IFileService _fileService;
+    
     [ObservableProperty] private ObservableCollection<RemuxFileViewModel> _inputFiles = [];
     
     [ObservableProperty]
@@ -25,25 +28,22 @@ public partial class RemuxToolViewModel : ToolViewModel
     [ObservableProperty]
     private string _outputDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyVideos);
 
-    public RemuxToolViewModel()
+    public RemuxToolViewModel(ILogger logger, IFileService fileService)
     {
-        DisplayName = "Remux";
+        _logger = logger.Child(this);
+        _fileService = fileService;
         
+        DisplayName = "Remux";
         SelectedFiles.CollectionChanged += (_, _) => RemoveSelectedFilesCommand.NotifyCanExecuteChanged();
     }
 
     [RelayCommand]
     private async Task ShowSelectInputFilesDialog()
     {
-        var fileService = App.Current?.Services.GetService<IFileService>();
-        if (fileService is null)
-        {
-            throw new NullReferenceException("File service is missing");
-        }
-
-        var files = await fileService.OpenVideoFilesAsync("Select Files");
+        var files = await _fileService.OpenVideoFilesAsync("Select Files");
         if (files is null)
         {
+            _logger.LogDebug("No files selected.");
             return;
         }
 
@@ -71,15 +71,10 @@ public partial class RemuxToolViewModel : ToolViewModel
     [RelayCommand]
     private async Task ShowSelectOutputDirectoryDialog()
     {
-        var fileService = App.Current?.Services.GetService<IFileService>();
-        if (fileService is null)
-        {
-            throw new NullReferenceException("File service is missing");
-        }
-
-        var folder = await fileService.OpenFolderAsync("Select Output Directory");
+        var folder = await _fileService.OpenFolderAsync("Select Output Directory");
         if (folder is null)
         {
+            _logger.LogDebug("No folder selected.");
             return;
         }
 
