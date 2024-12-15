@@ -5,12 +5,7 @@
              xmlns:vm="clr-namespace:VisualRemux.App.ViewModels"
              mc:Ignorable="d"
              d:DesignWidth="800" d:DesignHeight="450"
-             x:Class="VisualRemux.App.Views.OutputLogToolView"
-             x:DataType="vm:OutputLogToolViewModel">
-    
-    <Design.DataContext>
-        <vm:OutputLogToolViewModel/>
-    </Design.DataContext>
-    
+             x:Class="VisualRemux.App.Views.OutputLogView"
+             x:DataType="vm:OutputLogViewModel">
     <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center">Output Log</TextBlock>
 </UserControl>

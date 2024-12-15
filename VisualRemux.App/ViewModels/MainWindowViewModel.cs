@@ -7,25 +7,28 @@ namespace VisualRemux.App.ViewModels;
 
 public partial class MainWindowViewModel : ViewModelBase
 {
-    private readonly OutputLogToolViewModel _outputLogTool = new();
-
     [ObservableProperty] private ObservableCollection<ToolViewModel> _tools = [];
+    [ObservableProperty] private ViewModelBase? _selectedTool = new LandingPageViewModel();
 
-    [ObservableProperty] private ToolViewModel? _selectedTool = new LandingPageViewModel();
 
-    public MainWindowViewModel(RemuxToolViewModel remuxToolViewModel)
+    [ObservableProperty] private OutputLogViewModel _outputLog;
+        
+    public MainWindowViewModel(RemuxToolViewModel remuxToolViewModel, OutputLogViewModel outputLogViewModel)
     {
+        OutputLog = outputLogViewModel;
+        
         Tools.Add(remuxToolViewModel);
 
         SelectTool(_tools.FirstOrDefault());
+        
     }
 
     [RelayCommand]
-    private void SelectTool(ToolViewModel? tool) => SelectedTool = tool;
+    private void SelectTool(ViewModelBase? tool) => SelectedTool = tool;
 
     [RelayCommand]
     private void ShowOutputLog()
     {
-        SelectTool(_outputLogTool);
+        SelectTool(OutputLog);
     }
 }

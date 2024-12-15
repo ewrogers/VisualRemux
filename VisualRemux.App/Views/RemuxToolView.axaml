@@ -8,10 +8,6 @@
              x:Class="VisualRemux.App.Views.RemuxToolView"
              x:DataType="vm:RemuxToolViewModel">
     
-    <Design.DataContext>
-        <vm:MainWindowViewModel/>
-    </Design.DataContext>
-    
     <Grid RowDefinitions="* Auto">
         <!-- Scrollable Content Area -->
         <ScrollViewer Grid.Row="0" HorizontalScrollBarVisibility="Disabled" Padding="0,0,8,0">

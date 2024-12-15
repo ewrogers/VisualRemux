@@ -14,10 +14,6 @@
         CanResize="True"
         WindowStartupLocation="CenterScreen">
 
-    <Design.DataContext>
-        <vm:MainWindowViewModel/>
-    </Design.DataContext>
-
     <Grid ColumnDefinitions="240 *">
         
         <!-- Sidebar -->

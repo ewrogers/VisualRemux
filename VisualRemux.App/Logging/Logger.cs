@@ -47,6 +47,14 @@ public class Logger : ILogger
                 $"[{logEntry.Timestamp:HH:mm:ss.fff}] {logEntry.Level.ToString().ToUpperInvariant()} {{{senderName}}}: {logEntry.Message}";
 
             Console.WriteLine(logLine);
+
+            if (logEntry.Exception is null)
+            {
+                return;
+            }
+
+            var exceptionLine = $"{logEntry.Exception.GetType().Name}: {logEntry.Exception.Message}";
+            Console.WriteLine(exceptionLine);
         };
     }
 }
