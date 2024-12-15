@@ -17,4 +17,6 @@ public interface IFileService
     }
 
     Task<IReadOnlyList<IStorageFile>?> OpenFilesAsync(string title, params IEnumerable<FilePickerFileType> fileTypes);
+
+    Task<IStorageFolder?> OpenFolderAsync(string title);
 }

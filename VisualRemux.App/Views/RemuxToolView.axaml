@@ -95,6 +95,7 @@
                                          IsEnabled="{Binding IsChecked, ElementName=CustomOutputDirectoryRadioButton}"
                                          Margin="8,4"/>
                                 <Button Grid.Column="2" Content="Choose..."
+                                        Command="{Binding ShowSelectOutputDirectoryDialogCommand}"
                                         IsEnabled="{Binding IsChecked, ElementName=CustomOutputDirectoryRadioButton}"/>
                             </Grid>
                         </StackPanel>

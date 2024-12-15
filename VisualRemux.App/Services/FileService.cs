@@ -25,4 +25,15 @@ public class FileService(TopLevel topLevel) : IFileService
 
         return files.Count > 0 ? files : null;
     }
+
+    public async Task<IStorageFolder?> OpenFolderAsync(string title)
+    {
+        var options = new FolderPickerOpenOptions
+        {
+            Title = title,
+        };
+
+        var folders = await topLevel.StorageProvider.OpenFolderPickerAsync(options);
+        return folders.Count > 0 ? folders[0] : null;
+    }
 }

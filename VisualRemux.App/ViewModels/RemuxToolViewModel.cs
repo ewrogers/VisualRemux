@@ -68,6 +68,24 @@ public partial class RemuxToolViewModel : ToolViewModel
 
     private bool CanRemoveSelectedFiles() => SelectedFiles.Count > 0;
 
+    [RelayCommand]
+    private async Task ShowSelectOutputDirectoryDialog()
+    {
+        var fileService = App.Current?.Services.GetService<IFileService>();
+        if (fileService is null)
+        {
+            throw new NullReferenceException("File service is missing");
+        }
+
+        var folder = await fileService.OpenFolderAsync("Select Output Directory");
+        if (folder is null)
+        {
+            return;
+        }
+
+        OutputDirectory = folder.Path.LocalPath;
+    }
+
     public void AddFilesToQueue()
     {
         
