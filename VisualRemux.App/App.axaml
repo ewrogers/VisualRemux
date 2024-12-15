@@ -7,7 +7,6 @@
              RequestedThemeVariant="Default">
 
     <Application.Resources>
-        <converter:InverseBooleanConverter x:Key="InverseBooleanConverter"/>
         <converter:CasingConverter x:Key="UpperCaseConverter" Casing="Upper"/>
         <converter:CasingConverter x:Key="LowerCaseConverter" Casing="Lower"/>
         <converter:CasingConverter x:Key="TitleCaseConverter" Casing="Title"/>

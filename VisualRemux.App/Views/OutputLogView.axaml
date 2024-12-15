@@ -7,5 +7,82 @@
              d:DesignWidth="800" d:DesignHeight="450"
              x:Class="VisualRemux.App.Views.OutputLogView"
              x:DataType="vm:OutputLogViewModel">
-    <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center">Output Log</TextBlock>
+    <Grid>
+        <!-- Output Log Entry List -->
+        <Border BorderBrush="{DynamicResource BorderCardBorderBrush}"
+                BorderThickness="1"
+                CornerRadius="4"
+                Margin="16">
+            <StackPanel>
+                <DockPanel Margin="8">
+                    <TextBlock Text="Output Log" FontWeight="Bold" VerticalAlignment="Center" Margin="8,0"/>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Spacing="8">
+                        <Button Content="Clear Selected" Command="{Binding ClearSelectedLogsCommand}" Classes="Danger"/>
+                        <Button Content="Clear All" Command="{Binding ClearAllLogsCommand}" Classes="Danger"/>
+                    </StackPanel>
+                </DockPanel>
+                <Panel Height="1" Background="{DynamicResource BorderCardBorderBrush}"/>
+                <ListBox ItemsSource="{Binding LogEntries}"
+                         SelectedItems="{Binding SelectedLogEntries}"
+                         SelectionMode="Multiple,Toggle"
+                         Padding="1">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <Grid ColumnDefinitions="Auto Auto Auto *" Margin="0">
+                                <Label Grid.Column="0" Content="{Binding Timestamp, StringFormat='{}{0:t}'}"
+                                       Theme="{StaticResource TagLabel}"
+                                       Classes="Grey"
+                                       Margin="2,0"
+                                       Padding="8,1"
+                                       HorizontalContentAlignment="Center"
+                                       VerticalAlignment="Center"/>
+                                <Label Grid.Column="1" Content="{Binding LogLevel, Converter={StaticResource UpperCaseConverter}}"
+                                       Theme="{StaticResource TagLabel}"
+                                       Classes="Ghost Grey"
+                                       Classes.debug="{Binding IsDebug}"
+                                       Classes.info="{Binding IsInfo}"
+                                       Classes.warn="{Binding IsWarn}"
+                                       Classes.error="{Binding IsError}"
+                                       Width="48"
+                                       Margin="2,0"
+                                       Padding="2,1"
+                                       HorizontalContentAlignment="Center"
+                                       VerticalAlignment="Center">
+                                    <Label.Styles>
+                                        <Style Selector="Label.debug">
+                                            <Setter Property="BorderBrush" Value="{DynamicResource LabelTagGhostBlueBorderBrush}"/>
+                                            <Setter Property="Foreground" Value="{DynamicResource LabelTagGhostBlueForeground}"/>
+                                        </Style>
+                                        <Style Selector="Label.info">
+                                            <Setter Property="BorderBrush" Value="{DynamicResource LabelTagGhostGreenBorderBrush}"/>
+                                            <Setter Property="Foreground" Value="{DynamicResource LabelTagGhostGreenForeground}"/>
+                                        </Style>
+                                        <Style Selector="Label.warn">
+                                            <Setter Property="BorderBrush" Value="{DynamicResource LabelTagGhostAmberBorderBrush}"/>
+                                            <Setter Property="Foreground" Value="{DynamicResource LabelTagGhostAmberForeground}"/>
+                                        </Style>
+                                        <Style Selector="Label.error">
+                                            <Setter Property="BorderBrush" Value="{DynamicResource LabelTagGhostRedBorderBrush}"/>
+                                            <Setter Property="Foreground" Value="{DynamicResource LabelTagGhostRedForeground}"/>
+                                        </Style>
+                                    </Label.Styles>
+                                </Label>
+                                <Label Grid.Column="2" Content="{Binding SenderName}"
+                                       Theme="{StaticResource TagLabel}"
+                                       Classes="White"
+                                       Margin="4,0"
+                                       Padding="4,1"
+                                       HorizontalContentAlignment="Center"
+                                       VerticalAlignment="Center"/>
+                                <TextBlock Grid.Column="3" Text="{Binding Message}"
+                                           HorizontalAlignment="Left"
+                                           VerticalAlignment="Center"
+                                           Margin="2,0, 2, 0"/>
+                            </Grid>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </StackPanel>
+        </Border>
+    </Grid>
 </UserControl>

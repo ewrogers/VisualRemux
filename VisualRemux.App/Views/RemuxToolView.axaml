@@ -78,7 +78,7 @@
                             <!-- Default Output Directory -->
                             <RadioButton GroupName="OutputDirectory"
                                          Content="Use Application Setting"
-                                         IsChecked="{Binding UseCustomOutputDirectory, Converter={StaticResource InverseBooleanConverter}}"
+                                         IsChecked="{Binding !UseCustomOutputDirectory}"
                                          VerticalAlignment="Center"/>
                             <!-- Custom Output Directory -->
                             <Grid ColumnDefinitions="Auto * Auto">

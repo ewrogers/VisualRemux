@@ -83,6 +83,9 @@ public partial class RemuxToolViewModel : ToolViewModel
 
     public void AddFilesToQueue()
     {
-        
+        _logger.LogDebug("This is a debug message");
+        _logger.LogInfo("This is an info message");
+        _logger.LogWarn("This is a warning message");
+        _logger.LogError(new Exception("Something broke"), "This is an error message");
     }
 }
