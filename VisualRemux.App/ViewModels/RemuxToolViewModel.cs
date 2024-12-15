@@ -1,6 +1,5 @@
 using System;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -12,6 +11,9 @@ namespace VisualRemux.App.ViewModels;
 
 public partial class RemuxToolViewModel : ToolViewModel
 {
+    [ObservableProperty] private ObservableCollection<RemuxFileViewModel> _inputFiles = [];
+    [ObservableProperty] private ObservableCollection<RemuxFileViewModel> _selectedFiles = [];
+    
     [ObservableProperty]
     private string _outputFormat = "mp4";
 
@@ -22,13 +24,8 @@ public partial class RemuxToolViewModel : ToolViewModel
         DisplayName = "Remux";
     }
 
-    public void OutputCurrentState()
-    {
-        Debug.WriteLine($"OutputFormat: {OutputFormat}");
-    }
-
     [RelayCommand]
-    public async Task ShowSelectInputFilesDialog()
+    private async Task ShowSelectInputFilesDialog()
     {
         var fileService = App.Current?.Services.GetService<IFileService>();
         if (fileService is null)
@@ -41,5 +38,23 @@ public partial class RemuxToolViewModel : ToolViewModel
         {
             return;
         }
+
+        foreach (var file in files)
+        {
+            var viewModel = new RemuxFileViewModel(file.Path.LocalPath);
+            InputFiles.Add(viewModel);
+        }
+    }
+
+    [RelayCommand]
+    private void RemoveSelectedFiles()
+    {
+        // Make a defensive copy to avoid modifying the collection while removing items
+        foreach (var file in SelectedFiles.ToList())
+        {
+            InputFiles.Remove(file);
+        }
+
+        SelectedFiles.Clear();
     }
 }

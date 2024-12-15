@@ -35,7 +35,7 @@
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
                                 <Button Content="{Binding DisplayName}"
-                                        Command="{Binding ((vm:MainWindowViewModel)DataContext).SelectTool, RelativeSource={RelativeSource AncestorType=Window}}"
+                                        Command="{Binding ((vm:MainWindowViewModel)DataContext).SelectToolCommand, RelativeSource={RelativeSource AncestorType=Window}}"
                                         CommandParameter="{Binding}"
                                         Height="40"
                                         HorizontalAlignment="Stretch"/>
