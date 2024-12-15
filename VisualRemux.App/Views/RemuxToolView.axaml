@@ -22,7 +22,7 @@
                         CornerRadius="4">
                     <StackPanel>
                         <DockPanel Margin="8">
-                            <TextBlock Text="Input Files" FontWeight="Bold" VerticalAlignment="Center" Margin="4,0"/>
+                            <TextBlock Text="Input Files" FontWeight="Bold" VerticalAlignment="Center" Margin="8,0"/>
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Spacing="8">
                                 <Button Content="Add Files" Command="{Binding ShowSelectInputFilesDialogCommand}"/>
                                 <Button Content="Remove Selected" Command="{Binding RemoveSelectedFilesCommand}" Classes="Danger"/>
@@ -48,7 +48,7 @@
                         CornerRadius="4">
                     <StackPanel>
                         <DockPanel Margin="8">
-                            <TextBlock Text="Remux Options" FontWeight="Bold" VerticalAlignment="Center" Margin="4,0"/>
+                            <TextBlock Text="Remux Options" FontWeight="Bold" VerticalAlignment="Center" Margin="8,0"/>
                         </DockPanel>
                         <Panel Height="1" Background="{DynamicResource BorderCardBorderBrush}"/>
                         <StackPanel Spacing="8" Margin="16">
@@ -75,7 +75,7 @@
                         CornerRadius="4">
                     <StackPanel>
                         <DockPanel Margin="8">
-                            <TextBlock Text="Output Directory" FontWeight="Bold" VerticalAlignment="Center" Margin="4,0"/>
+                            <TextBlock Text="Output Directory" FontWeight="Bold" VerticalAlignment="Center" Margin="8,0"/>
                         </DockPanel>
                         <Panel Height="1" Background="{DynamicResource BorderCardBorderBrush}"/>
                         <StackPanel Spacing="8" Margin="16">

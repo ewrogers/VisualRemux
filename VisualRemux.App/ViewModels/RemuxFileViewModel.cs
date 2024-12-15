@@ -3,7 +3,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace VisualRemux.App.ViewModels;
 
-public partial class RemuxFileViewModel : ObservableObject
+public partial class RemuxFileViewModel : ViewModelBase
 {
     [ObservableProperty]
     private string _inputFilePath;
