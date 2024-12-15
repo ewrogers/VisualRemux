@@ -7,9 +7,10 @@
              RequestedThemeVariant="Default">
 
     <Application.Resources>
-        <converter:CasingConverter x:Key="UpperConverter" Casing="Upper"/>
-        <converter:CasingConverter x:Key="LowerConverter" Casing="Lower"/>
-        <converter:CasingConverter x:Key="TitleConverter" Casing="Title"/>
+        <converter:InverseBooleanConverter x:Key="InverseBooleanConverter"/>
+        <converter:CasingConverter x:Key="UpperCaseConverter" Casing="Upper"/>
+        <converter:CasingConverter x:Key="LowerCaseConverter" Casing="Lower"/>
+        <converter:CasingConverter x:Key="TitleCaseConverter" Casing="Title"/>
     </Application.Resources>
     
     <Application.DataTemplates>

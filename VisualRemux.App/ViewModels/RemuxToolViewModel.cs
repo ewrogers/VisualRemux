@@ -12,16 +12,24 @@ namespace VisualRemux.App.ViewModels;
 public partial class RemuxToolViewModel : ToolViewModel
 {
     [ObservableProperty] private ObservableCollection<RemuxFileViewModel> _inputFiles = [];
-    [ObservableProperty] private ObservableCollection<RemuxFileViewModel> _selectedFiles = [];
     
     [ObservableProperty]
-    private string _outputFormat = "mp4";
+    private ObservableCollection<RemuxFileViewModel> _selectedFiles = [];
+
+    [ObservableProperty] private string _outputFormat = "mp4";
 
     [ObservableProperty] private ObservableCollection<string> _availableOutputFormats = ["mp4", "mkv"];
-    
+
+    [ObservableProperty] private bool _useCustomOutputDirectory;
+
+    [ObservableProperty]
+    private string _outputDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyVideos);
+
     public RemuxToolViewModel()
     {
         DisplayName = "Remux";
+        
+        SelectedFiles.CollectionChanged += (_, _) => RemoveSelectedFilesCommand.NotifyCanExecuteChanged();
     }
 
     [RelayCommand]
@@ -46,7 +54,7 @@ public partial class RemuxToolViewModel : ToolViewModel
         }
     }
 
-    [RelayCommand]
+    [RelayCommand(CanExecute = nameof(CanRemoveSelectedFiles))]
     private void RemoveSelectedFiles()
     {
         // Make a defensive copy to avoid modifying the collection while removing items
@@ -56,5 +64,12 @@ public partial class RemuxToolViewModel : ToolViewModel
         }
 
         SelectedFiles.Clear();
+    }
+
+    private bool CanRemoveSelectedFiles() => SelectedFiles.Count > 0;
+
+    public void AddFilesToQueue()
+    {
+        
     }
 }
