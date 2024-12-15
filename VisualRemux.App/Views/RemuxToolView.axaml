@@ -2,8 +2,17 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:Class="VisualRemux.App.Views.RemuxToolView">
+             xmlns:vm="clr-namespace:VisualRemux.App.ViewModels"
+             xmlns:converter="clr-namespace:VisualRemux.App.Converters"
+             mc:Ignorable="d"
+             d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="VisualRemux.App.Views.RemuxToolView"
+             x:DataType="vm:RemuxToolViewModel">
+    
+    <Design.DataContext>
+        <vm:MainWindowViewModel/>
+    </Design.DataContext>
+    
     <Grid RowDefinitions="* Auto">
         <!-- Scrollable Content Area -->
         <ScrollViewer Grid.Row="0" HorizontalScrollBarVisibility="Disabled" Padding="0,0,8,0">
@@ -21,13 +30,7 @@
                             </StackPanel>
                         </DockPanel>
                         <Panel Height="1" Background="{DynamicResource BorderCardBorderBrush}"/>
-                        <ListBox Height="320" SelectionMode="Multiple,Toggle" Padding="1">
-                            <ListBox.Items>
-                                <ListBoxItem Content="First Item"/>
-                                <ListBoxItem Content="Second Item"/>  
-                                <ListBoxItem Content="Third Item"/>  
-                            </ListBox.Items>
-                        </ListBox>
+                        <ListBox Height="320" SelectionMode="Multiple,Toggle" Padding="1"/>
                     </StackPanel>
                 </Border>
                 
@@ -41,14 +44,17 @@
                         </DockPanel>
                         <Panel Height="1" Background="{DynamicResource BorderCardBorderBrush}"/>
                         <StackPanel Spacing="8" Margin="24">
-                            <!-- Output Container Options -->
+                            <!-- Output Format Options -->
                             <StackPanel Orientation="Horizontal" Spacing="8">
-                                <Label Content="Output Container:" VerticalAlignment="Center"/>
-                                <ComboBox SelectedIndex="0" MinWidth="120">
-                                    <ComboBox.Items>
-                                        <ComboBoxItem Content="MP4"/>
-                                        <ComboBoxItem Content="MKV"/>
-                                    </ComboBox.Items>
+                                <Label Content="Output Format:" VerticalAlignment="Center"/>
+                                <ComboBox ItemsSource="{Binding AvailableOutputFormats}"
+                                          SelectedItem="{Binding OutputFormat}"
+                                          MinWidth="120">
+                                    <ComboBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding ., Converter={StaticResource UpperConverter}}"/>
+                                        </DataTemplate>
+                                    </ComboBox.ItemTemplate>
                                 </ComboBox>
                             </StackPanel>
                         </StackPanel>
@@ -95,7 +101,7 @@
                 BorderThickness="0,1, 0, 0"
                 Padding="16">
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Spacing="16">
-                <Button Content="Add Files to Queue"/>
+                <Button Content="Add Files to Queue" Command="{Binding OutputCurrentState}"/>
             </StackPanel>
         </Border>
     </Grid>
