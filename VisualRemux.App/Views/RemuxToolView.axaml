@@ -3,7 +3,6 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:vm="clr-namespace:VisualRemux.App.ViewModels"
-             xmlns:converter="clr-namespace:VisualRemux.App.Converters"
              mc:Ignorable="d"
              d:DesignWidth="800" d:DesignHeight="450"
              x:Class="VisualRemux.App.Views.RemuxToolView"
@@ -101,7 +100,7 @@
                 BorderThickness="0,1, 0, 0"
                 Padding="16">
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Spacing="16">
-                <Button Content="Add Files to Queue" Command="{Binding OutputCurrentState}"/>
+                <Button Content="Add Files to Queue" Command="{Binding ShowSelectInputFilesDialog}"/>
             </StackPanel>
         </Border>
     </Grid>
