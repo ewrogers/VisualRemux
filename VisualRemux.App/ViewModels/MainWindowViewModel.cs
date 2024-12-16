@@ -12,15 +12,14 @@ public partial class MainWindowViewModel : ViewModelBase
 
 
     [ObservableProperty] private OutputLogViewModel _outputLog;
-        
+
     public MainWindowViewModel(RemuxToolViewModel remuxToolViewModel, OutputLogViewModel outputLogViewModel)
     {
         OutputLog = outputLogViewModel;
-        
+
         Tools.Add(remuxToolViewModel);
 
         SelectTool(_tools.FirstOrDefault());
-        
     }
 
     [RelayCommand]

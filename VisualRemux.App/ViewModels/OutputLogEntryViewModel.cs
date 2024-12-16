@@ -8,7 +8,7 @@ public class OutputLogEntryViewModel : ViewModelBase
     private readonly object? _sender;
     private readonly LogEntry _logEntry;
 
-    public string SenderName => _sender is ViewModelBase vm ? vm.DisplayName : _sender?.ToString() ?? "Unknown";
+    public string SenderName => _sender is ViewModelBase vm ? vm.DisplayName : _sender?.GetType().Name ?? "Unknown";
 
     public DateTime Timestamp => _logEntry.Timestamp;
     public LogLevel LogLevel => _logEntry.Level;

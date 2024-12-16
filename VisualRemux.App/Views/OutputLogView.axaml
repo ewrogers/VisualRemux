@@ -3,86 +3,89 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:vm="clr-namespace:VisualRemux.App.ViewModels"
+             xmlns:behavior="clr-namespace:VisualRemux.App.Behaviors"
              mc:Ignorable="d"
              d:DesignWidth="800" d:DesignHeight="450"
              x:Class="VisualRemux.App.Views.OutputLogView"
              x:DataType="vm:OutputLogViewModel">
     <Grid>
-        <!-- Output Log Entry List -->
-        <Border BorderBrush="{DynamicResource BorderCardBorderBrush}"
-                BorderThickness="1"
-                CornerRadius="4"
-                Margin="16">
-            <StackPanel>
-                <DockPanel Margin="8">
-                    <TextBlock Text="Output Log" FontWeight="Bold" VerticalAlignment="Center" Margin="8,0"/>
-                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Spacing="8">
-                        <Button Content="Clear Selected" Command="{Binding ClearSelectedLogsCommand}" Classes="Danger"/>
-                        <Button Content="Clear All" Command="{Binding ClearAllLogsCommand}" Classes="Danger"/>
-                    </StackPanel>
-                </DockPanel>
-                <Panel Height="1" Background="{DynamicResource BorderCardBorderBrush}"/>
-                <ListBox ItemsSource="{Binding LogEntries}"
-                         SelectedItems="{Binding SelectedLogEntries}"
-                         SelectionMode="Multiple,Toggle"
-                         Padding="1">
-                    <ListBox.ItemTemplate>
-                        <DataTemplate>
-                            <Grid ColumnDefinitions="Auto Auto Auto *" Margin="0">
-                                <Label Grid.Column="0" Content="{Binding Timestamp, StringFormat='{}{0:t}'}"
-                                       Theme="{StaticResource TagLabel}"
-                                       Classes="Grey"
-                                       Margin="2,0"
-                                       Padding="8,1"
-                                       HorizontalContentAlignment="Center"
-                                       VerticalAlignment="Center"/>
-                                <Label Grid.Column="1" Content="{Binding LogLevel, Converter={StaticResource UpperCaseConverter}}"
-                                       Theme="{StaticResource TagLabel}"
-                                       Classes="Ghost Grey"
-                                       Classes.debug="{Binding IsDebug}"
-                                       Classes.info="{Binding IsInfo}"
-                                       Classes.warn="{Binding IsWarn}"
-                                       Classes.error="{Binding IsError}"
-                                       Width="48"
-                                       Margin="2,0"
-                                       Padding="2,1"
-                                       HorizontalContentAlignment="Center"
-                                       VerticalAlignment="Center">
-                                    <Label.Styles>
-                                        <Style Selector="Label.debug">
-                                            <Setter Property="BorderBrush" Value="{DynamicResource LabelTagGhostBlueBorderBrush}"/>
-                                            <Setter Property="Foreground" Value="{DynamicResource LabelTagGhostBlueForeground}"/>
-                                        </Style>
-                                        <Style Selector="Label.info">
-                                            <Setter Property="BorderBrush" Value="{DynamicResource LabelTagGhostGreenBorderBrush}"/>
-                                            <Setter Property="Foreground" Value="{DynamicResource LabelTagGhostGreenForeground}"/>
-                                        </Style>
-                                        <Style Selector="Label.warn">
-                                            <Setter Property="BorderBrush" Value="{DynamicResource LabelTagGhostAmberBorderBrush}"/>
-                                            <Setter Property="Foreground" Value="{DynamicResource LabelTagGhostAmberForeground}"/>
-                                        </Style>
-                                        <Style Selector="Label.error">
-                                            <Setter Property="BorderBrush" Value="{DynamicResource LabelTagGhostRedBorderBrush}"/>
-                                            <Setter Property="Foreground" Value="{DynamicResource LabelTagGhostRedForeground}"/>
-                                        </Style>
-                                    </Label.Styles>
-                                </Label>
-                                <Label Grid.Column="2" Content="{Binding SenderName}"
-                                       Theme="{StaticResource TagLabel}"
-                                       Classes="White"
-                                       Margin="4,0"
-                                       Padding="4,1"
-                                       HorizontalContentAlignment="Center"
-                                       VerticalAlignment="Center"/>
-                                <TextBlock Grid.Column="3" Text="{Binding Message}"
-                                           HorizontalAlignment="Left"
-                                           VerticalAlignment="Center"
-                                           Margin="2,0, 2, 0"/>
-                            </Grid>
+        <Grid RowDefinitions="Auto *" Margin="16">
+            <!-- Toolbar Buttons -->
+            <Border Grid.Row="0" Margin="0,0,0,8">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Spacing="8">
+                    <Button Content="Clear Selected" Command="{Binding ClearSelectedLogsCommand}" Classes="Danger"/>
+                    <Button Content="Clear All" Command="{Binding ClearAllLogsCommand}" Classes="Danger"/>
+                </StackPanel>
+            </Border>
+            
+            <!-- Output Log Table-->
+            <DataGrid Grid.Row="1"
+                      BorderBrush="{DynamicResource BorderCardBorderBrush}"
+                      BorderThickness="1"
+                      CornerRadius="4"
+                      ItemsSource="{Binding LogEntries}"
+                      behavior:DataGridSelectedItemsBehavior.SelectedItems="{Binding SelectedLogEntries}"
+                      IsReadOnly="True"
+                      Focusable="False"
+                      SelectionMode="Extended"
+                      GridLinesVisibility="Horizontal"
+                      HorizontalScrollBarVisibility="Disabled">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Timestamp"
+                                        Binding="{Binding Timestamp, StringFormat='{}{0:t}'}"
+                                        Width="100"/>
+                    <DataGridTemplateColumn Header="Level">
+                        <DataTemplate DataType="{x:Type vm:OutputLogEntryViewModel}">
+                            <Label Content="{Binding LogLevel, Converter={StaticResource LowerCaseConverter}}"
+                                   Theme="{StaticResource TagLabel}"
+                                   Classes="Grey"
+                                   Classes.debug="{Binding IsDebug}"
+                                   Classes.info="{Binding IsInfo}"
+                                   Classes.warn="{Binding IsWarn}"
+                                   Classes.error="{Binding IsError}"
+                                   Margin="4,0"
+                                   Padding="4,2"
+                                   HorizontalAlignment="Stretch"
+                                   HorizontalContentAlignment="Center"
+                                   VerticalContentAlignment="Center">
+                                <Label.Styles>
+                                    <Style Selector="Label.debug">
+                                        <Setter Property="Background" Value="{DynamicResource LabelTagLightBlueBackground}"></Setter>
+                                        <Setter Property="Foreground" Value="{DynamicResource LabelTagLightBlueForeground}"/>
+                                    </Style>
+                                    <Style Selector="Label.info">
+                                        <Setter Property="Background" Value="{DynamicResource LabelTagLightGreenBackground}"></Setter>
+                                        <Setter Property="Foreground" Value="{DynamicResource LabelTagLightGreenForeground}"/>
+                                    </Style>
+                                    <Style Selector="Label.warn">
+                                        <Setter Property="Background" Value="{DynamicResource LabelTagLightAmberBackground}"></Setter>
+                                        <Setter Property="Foreground" Value="{DynamicResource LabelTagLightAmberForeground}"/>
+                                    </Style>
+                                    <Style Selector="Label.error">
+                                        <Setter Property="Background" Value="{DynamicResource LabelTagLightRedBackground}"></Setter>
+                                        <Setter Property="Foreground" Value="{DynamicResource LabelTagLightRedForeground}"/>
+                                    </Style>
+                                </Label.Styles>
+                            </Label>
                         </DataTemplate>
-                    </ListBox.ItemTemplate>
-                </ListBox>
-            </StackPanel>
-        </Border>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn Header="Source">
+                        <DataTemplate DataType="{x:Type vm:OutputLogEntryViewModel}">
+                            <Label Content="{Binding SenderName}"
+                                   Theme="{StaticResource TagLabel}"
+                                   Classes="White"
+                                   Margin="4,0"
+                                   Padding="4,2"
+                                   HorizontalAlignment="Stretch"
+                                   HorizontalContentAlignment="Center"
+                                   VerticalContentAlignment="Center"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTextColumn Header="Message"
+                                        Binding="{Binding Message}"
+                                        Width="*"/>
+                </DataGrid.Columns>
+            </DataGrid>
+        </Grid>
     </Grid>
 </UserControl>

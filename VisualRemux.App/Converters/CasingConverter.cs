@@ -17,10 +17,12 @@ public class CasingConverter : IValueConverter
 
     public object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
     {
-        if (value is not string text)
+        if (value is null)
         {
             return value;
         }
+
+        var text = (value as string ?? value.ToString()) ?? string.Empty;
 
         return Casing switch
         {
