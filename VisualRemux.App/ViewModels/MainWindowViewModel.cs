@@ -7,33 +7,36 @@ namespace VisualRemux.App.ViewModels;
 
 public partial class MainWindowViewModel : ViewModelBase
 {
-    [ObservableProperty] private ObservableCollection<ToolViewModel> _tools = [];
+    [ObservableProperty] private ObservableCollection<ToolViewModel> _userTools = [];
     [ObservableProperty] private ToolViewModel? _selectedTool = new LandingPageViewModel();
     
+    [ObservableProperty] private ObservableCollection<ToolViewModel> _systemTools = [];
     [ObservableProperty] private OutputLogViewModel _outputLog;
     [ObservableProperty] private ApplicationSettingsViewModel _applicationSettings;
 
     public MainWindowViewModel(RemuxToolViewModel remuxToolViewModel, OutputLogViewModel outputLogViewModel,
         ApplicationSettingsViewModel applicationSettingsViewModel)
     {
-        OutputLog = outputLogViewModel;
-        ApplicationSettings = applicationSettingsViewModel;
+        SystemTools.Add(outputLogViewModel);
+        SystemTools.Add(applicationSettingsViewModel);
 
-        Tools.Add(remuxToolViewModel);
+        UserTools.Add(remuxToolViewModel);
 
-        SelectTool(_tools.FirstOrDefault());
+        SelectTool(UserTools.FirstOrDefault());
     }
 
     [RelayCommand]
     private void SelectTool(ToolViewModel? tool)
     {
-        foreach (var availableTool in Tools)
+        foreach (var availableTool in UserTools)
         {
             availableTool.IsSelected = false;
         }
 
-        OutputLog.IsSelected = false;
-        ApplicationSettings.IsSelected = false;
+        foreach (var availableTool in SystemTools)
+        {
+            availableTool.IsSelected = false;
+        }
 
         SelectedTool = tool;
 

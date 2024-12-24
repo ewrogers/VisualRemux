@@ -23,9 +23,9 @@
                 Padding="16">
             <Grid RowDefinitions="Auto, *, Auto">
 
-                <!-- Available Tools -->
+                <!-- Available User Tools -->
                 <StackPanel Grid.Row="0" Spacing="8">
-                    <ItemsControl ItemsSource="{Binding Tools}"
+                    <ItemsControl ItemsSource="{Binding UserTools}"
                                   HorizontalAlignment="Stretch">
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
@@ -33,6 +33,7 @@
                                               CommandParameter="{Binding .}"
                                               IsChecked="{Binding IsSelected}"
                                               Height="40"
+                                              Margin="8,4"
                                               HorizontalAlignment="Stretch">
                                     <TextBlock Text="{Binding DisplayName}"/>
                                 </ToggleButton>
@@ -41,20 +42,23 @@
                     </ItemsControl>
                 </StackPanel>
                 
-                <!-- Bottom Tools -->
+                <!-- System Tools -->
                 <StackPanel Grid.Row="2" Spacing="8">
-                    <ToggleButton
-                            Command="{Binding ShowOutputLogCommand}"
-                            IsChecked="{Binding OutputLog.IsSelected}"
-                            Height="40" HorizontalAlignment="Stretch">
-                        <TextBlock Text="Output Log"/>
-                    </ToggleButton>
-                    <ToggleButton
-                            Command="{Binding ShowApplicationSettingsCommand}"
-                            IsChecked="{Binding ApplicationSettings.IsSelected}"
-                            Height="40" HorizontalAlignment="Stretch">
-                        <TextBlock Text="Settings"/>
-                    </ToggleButton>
+                    <ItemsControl ItemsSource="{Binding SystemTools}"
+                                  HorizontalAlignment="Stretch">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <ToggleButton Command="{Binding $parent[Window].((vm:MainWindowViewModel)DataContext).SelectToolCommand}"
+                                              CommandParameter="{Binding .}"
+                                              IsChecked="{Binding IsSelected}"
+                                              Height="40"
+                                              Margin="8,4"
+                                              HorizontalAlignment="Stretch">
+                                    <TextBlock Text="{Binding DisplayName}"/>
+                                </ToggleButton>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
                 </StackPanel>
             </Grid>
         </Border>
