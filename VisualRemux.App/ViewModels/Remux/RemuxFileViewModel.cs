@@ -1,7 +1,7 @@
 using System.IO;
 using CommunityToolkit.Mvvm.ComponentModel;
 
-namespace VisualRemux.App.ViewModels;
+namespace VisualRemux.App.ViewModels.Remux;
 
 public partial class RemuxFileViewModel : ViewModelBase
 {

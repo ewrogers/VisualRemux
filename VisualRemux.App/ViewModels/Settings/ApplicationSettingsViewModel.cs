@@ -1,4 +1,4 @@
-namespace VisualRemux.App.ViewModels;
+namespace VisualRemux.App.ViewModels.Settings;
 
 public class ApplicationSettingsViewModel : ToolViewModel
 {

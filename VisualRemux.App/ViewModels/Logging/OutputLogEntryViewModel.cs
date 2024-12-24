@@ -1,7 +1,7 @@
 using System;
 using VisualRemux.App.Logging;
 
-namespace VisualRemux.App.ViewModels;
+namespace VisualRemux.App.ViewModels.Logging;
 
 public class OutputLogEntryViewModel : ViewModelBase
 {

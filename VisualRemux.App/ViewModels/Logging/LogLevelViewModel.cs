@@ -1,7 +1,7 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using VisualRemux.App.Logging;
 
-namespace VisualRemux.App.ViewModels;
+namespace VisualRemux.App.ViewModels.Logging;
 
 public partial class LogLevelViewModel : ViewModelBase
 {

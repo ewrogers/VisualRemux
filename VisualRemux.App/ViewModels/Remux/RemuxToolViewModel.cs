@@ -7,7 +7,7 @@ using CommunityToolkit.Mvvm.Input;
 using VisualRemux.App.Logging;
 using VisualRemux.App.Services;
 
-namespace VisualRemux.App.ViewModels;
+namespace VisualRemux.App.ViewModels.Remux;
 
 public partial class RemuxToolViewModel : ToolViewModel
 {

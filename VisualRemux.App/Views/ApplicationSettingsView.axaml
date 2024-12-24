@@ -6,7 +6,7 @@
              mc:Ignorable="d"
              d:DesignWidth="800" d:DesignHeight="450"
              x:Class="VisualRemux.App.Views.ApplicationSettingsView"
-             x:DataType="vm:ApplicationSettingsViewModel">
+             x:DataType="vm:Settings.ApplicationSettingsViewModel">
     <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Padding="8">
         Application Settings
     </TextBlock>

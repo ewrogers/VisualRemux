@@ -7,7 +7,7 @@
              mc:Ignorable="d"
              d:DesignWidth="800" d:DesignHeight="450"
              x:Class="VisualRemux.App.Views.OutputLogView"
-             x:DataType="vm:OutputLogViewModel">
+             x:DataType="vm:Logging.OutputLogViewModel">
     <Grid>
         <Grid RowDefinitions="Auto *" Margin="16">
             <!-- Toolbar Buttons -->
@@ -60,7 +60,7 @@
                                         Binding="{Binding Timestamp, StringFormat='{}{0:t}'}"
                                         Width="80"/>
                     <DataGridTemplateColumn Header="Level">
-                        <DataTemplate DataType="{x:Type vm:OutputLogEntryViewModel}">
+                        <DataTemplate DataType="{x:Type vm:Logging.OutputLogEntryViewModel}">
                             <Label Content="{Binding LogLevel, Converter={StaticResource LowerCaseConverter}}"
                                    Theme="{StaticResource TagLabel}"
                                    Classes="Grey"
@@ -95,7 +95,7 @@
                         </DataTemplate>
                     </DataGridTemplateColumn>
                     <DataGridTemplateColumn Header="Source">
-                        <DataTemplate DataType="{x:Type vm:OutputLogEntryViewModel}">
+                        <DataTemplate DataType="{x:Type vm:Logging.OutputLogEntryViewModel}">
                             <Label Content="{Binding SenderName}"
                                    Theme="{StaticResource TagLabel}"
                                    Classes="White"

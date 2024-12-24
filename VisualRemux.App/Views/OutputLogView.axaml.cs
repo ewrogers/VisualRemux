@@ -1,7 +1,7 @@
 using Avalonia.Controls;
 using Microsoft.Extensions.DependencyInjection;
 using VisualRemux.App.Logging;
-using VisualRemux.App.ViewModels;
+using VisualRemux.App.ViewModels.Logging;
 
 namespace VisualRemux.App.Views;
 

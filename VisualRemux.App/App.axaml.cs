@@ -9,6 +9,9 @@ using Microsoft.Extensions.DependencyInjection;
 using VisualRemux.App.Logging;
 using VisualRemux.App.Services;
 using VisualRemux.App.ViewModels;
+using VisualRemux.App.ViewModels.Logging;
+using VisualRemux.App.ViewModels.Remux;
+using VisualRemux.App.ViewModels.Settings;
 using VisualRemux.App.Views;
 
 namespace VisualRemux.App;

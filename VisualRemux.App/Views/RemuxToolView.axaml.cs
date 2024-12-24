@@ -1,6 +1,6 @@
 using Avalonia.Controls;
 using Microsoft.Extensions.DependencyInjection;
-using VisualRemux.App.ViewModels;
+using VisualRemux.App.ViewModels.Remux;
 
 namespace VisualRemux.App.Views;
 

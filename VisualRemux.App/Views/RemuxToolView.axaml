@@ -6,7 +6,7 @@
              mc:Ignorable="d"
              d:DesignWidth="800" d:DesignHeight="450"
              x:Class="VisualRemux.App.Views.RemuxToolView"
-             x:DataType="vm:RemuxToolViewModel">
+             x:DataType="vm:Remux.RemuxToolViewModel">
     
     <Grid RowDefinitions="* Auto">
         <!-- Scrollable Content Area -->

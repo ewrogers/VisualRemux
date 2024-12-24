@@ -5,7 +5,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using VisualRemux.App.Logging;
 
-namespace VisualRemux.App.ViewModels;
+namespace VisualRemux.App.ViewModels.Logging;
 
 public partial class OutputLogViewModel : ToolViewModel
 {
