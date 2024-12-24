@@ -10,6 +10,7 @@ using VisualRemux.App.Logging;
 using VisualRemux.App.Services;
 using VisualRemux.App.ViewModels;
 using VisualRemux.App.ViewModels.Logging;
+using VisualRemux.App.ViewModels.Queue;
 using VisualRemux.App.ViewModels.Remux;
 using VisualRemux.App.ViewModels.Settings;
 using VisualRemux.App.Views;
@@ -56,6 +57,7 @@ public partial class App : Application
         // Register view models
         services.AddTransient<MainWindowViewModel>();
         services.AddTransient<RemuxToolViewModel>();
+        services.AddTransient<WorkQueueViewModel>();
         services.AddTransient<OutputLogViewModel>();
         services.AddTransient<ApplicationSettingsViewModel>();
 

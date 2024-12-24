@@ -1,8 +1,11 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
 using System.Linq;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Microsoft.Extensions.DependencyInjection;
 using VisualRemux.App.ViewModels.Logging;
+using VisualRemux.App.ViewModels.Queue;
 using VisualRemux.App.ViewModels.Remux;
 using VisualRemux.App.ViewModels.Settings;
 
@@ -17,13 +20,13 @@ public partial class MainWindowViewModel : ViewModelBase
     [ObservableProperty] private OutputLogViewModel _outputLog;
     [ObservableProperty] private ApplicationSettingsViewModel _applicationSettings;
 
-    public MainWindowViewModel(RemuxToolViewModel remuxToolViewModel, OutputLogViewModel outputLogViewModel,
-        ApplicationSettingsViewModel applicationSettingsViewModel)
+    public MainWindowViewModel(IServiceProvider serviceProvider)
     {
-        SystemTools.Add(outputLogViewModel);
-        SystemTools.Add(applicationSettingsViewModel);
+        SystemTools.Add(serviceProvider.GetRequiredService<WorkQueueViewModel>());
+        SystemTools.Add(serviceProvider.GetRequiredService<OutputLogViewModel>());
+        SystemTools.Add(serviceProvider.GetRequiredService<ApplicationSettingsViewModel>());
 
-        UserTools.Add(remuxToolViewModel);
+        UserTools.Add(serviceProvider.GetRequiredService<RemuxToolViewModel>());
 
         SelectTool(UserTools.FirstOrDefault());
     }

@@ -1,9 +1,9 @@
 <Window xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:vm="using:VisualRemux.App.ViewModels"
-        xmlns:view="using:VisualRemux.App.Views"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:vm="using:VisualRemux.App.ViewModels"
+        xmlns:view="using:VisualRemux.App.Views"
         mc:Ignorable="d"
         d:DesignWidth="1024" d:DesignHeight="768"
         x:Class="VisualRemux.App.Views.MainWindow"
@@ -34,7 +34,7 @@
                                               CommandParameter="{Binding .}"
                                               IsChecked="{Binding IsSelected}"
                                               Height="40"
-                                              Margin="8,4"
+                                              Margin="8"
                                               HorizontalAlignment="Stretch">
                                     <TextBlock Text="{Binding DisplayName}"/>
                                 </ToggleButton>
@@ -53,7 +53,7 @@
                                               CommandParameter="{Binding .}"
                                               IsChecked="{Binding IsSelected}"
                                               Height="40"
-                                              Margin="8,4"
+                                              Margin="8"
                                               HorizontalAlignment="Stretch">
                                     <TextBlock Text="{Binding DisplayName}"/>
                                 </ToggleButton>
@@ -74,6 +74,9 @@
             <ContentControl.DataTemplates>
                 <DataTemplate DataType="{x:Type vm:Remux.RemuxToolViewModel}">
                     <view:RemuxToolView/>
+                </DataTemplate>
+                <DataTemplate DataType="{x:Type vm:Queue.WorkQueueViewModel}">
+                    <view:WorkQueueView/>
                 </DataTemplate>
                 <DataTemplate DataType="{x:Type vm:Logging.OutputLogViewModel}">
                     <view:OutputLogView/>
