@@ -29,11 +29,13 @@
                                   HorizontalAlignment="Stretch">
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
-                                <Button Content="{Binding DisplayName}"
-                                        Command="{Binding ((vm:MainWindowViewModel)DataContext).SelectToolCommand, RelativeSource={RelativeSource AncestorType=Window}}"
-                                        CommandParameter="{Binding}"
-                                        Height="40"
-                                        HorizontalAlignment="Stretch"/>
+                                <ToggleButton Command="{Binding $parent[Window].((vm:MainWindowViewModel)DataContext).SelectToolCommand}"
+                                              CommandParameter="{Binding .}"
+                                              IsChecked="{Binding IsSelected}"
+                                              Height="40"
+                                              HorizontalAlignment="Stretch">
+                                    <TextBlock Text="{Binding DisplayName}"/>
+                                </ToggleButton>
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
                     </ItemsControl>
@@ -41,12 +43,18 @@
                 
                 <!-- Bottom Tools -->
                 <StackPanel Grid.Row="2" Spacing="8">
-                    <Button Content="Output Log"
+                    <ToggleButton
                             Command="{Binding ShowOutputLogCommand}"
-                            Height="40" HorizontalAlignment="Stretch"/>
-                    <Button Content="Settings"
-                            IsEnabled="False"
-                            Height="40" HorizontalAlignment="Stretch" />
+                            IsChecked="{Binding OutputLog.IsSelected}"
+                            Height="40" HorizontalAlignment="Stretch">
+                        <TextBlock Text="Output Log"/>
+                    </ToggleButton>
+                    <ToggleButton
+                            Command="{Binding ShowApplicationSettingsCommand}"
+                            IsChecked="{Binding ApplicationSettings.IsSelected}"
+                            Height="40" HorizontalAlignment="Stretch">
+                        <TextBlock Text="Settings"/>
+                    </ToggleButton>
                 </StackPanel>
             </Grid>
         </Border>

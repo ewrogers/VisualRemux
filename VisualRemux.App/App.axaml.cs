@@ -54,6 +54,7 @@ public partial class App : Application
         services.AddTransient<MainWindowViewModel>();
         services.AddTransient<RemuxToolViewModel>();
         services.AddTransient<OutputLogViewModel>();
+        services.AddTransient<ApplicationSettingsViewModel>();
 
         // Register services
         services.AddSingleton<ILogger, Logger>();

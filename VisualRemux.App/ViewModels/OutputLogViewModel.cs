@@ -7,7 +7,7 @@ using VisualRemux.App.Logging;
 
 namespace VisualRemux.App.ViewModels;
 
-public partial class OutputLogViewModel : ViewModelBase
+public partial class OutputLogViewModel : ToolViewModel
 {
     private readonly List<OutputLogEntryViewModel> _logEntries = [];
     
