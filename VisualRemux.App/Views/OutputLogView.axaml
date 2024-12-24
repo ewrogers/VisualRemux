@@ -12,10 +12,35 @@
         <Grid RowDefinitions="Auto *" Margin="16">
             <!-- Toolbar Buttons -->
             <Border Grid.Row="0" Margin="0,0,0,8">
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Spacing="8">
-                    <Button Content="Clear Selected" Command="{Binding ClearSelectedLogsCommand}" Classes="Danger"/>
-                    <Button Content="Clear All" Command="{Binding ClearAllLogsCommand}" Classes="Danger"/>
-                </StackPanel>
+                <Grid ColumnDefinitions="* *">
+                    <StackPanel Grid.Column="0" Orientation="Horizontal">
+                        <TextBlock Text="Log Level Filter" FontWeight="Bold" VerticalAlignment="Center" Margin="8,0"/>
+                        <ItemsControl ItemsSource="{Binding LogLevels}">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <WrapPanel/>
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <ToggleButton IsChecked="{Binding IsEnabled}"
+                                                  Classes.Primary = "{Binding IsDebug}"
+                                                  Classes.Success = "{Binding IsInfo}"
+                                                  Classes.Warning = "{Binding IsWarn}"
+                                                  Classes.Danger = "{Binding IsError}"
+                                                  Margin="2,0"
+                                                  Padding="16,-2">
+                                        <TextBlock Text="{Binding LogLevel}"/>
+                                    </ToggleButton>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </StackPanel>
+                    <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right" Spacing="8">
+                        <Button Content="Clear Selected" Command="{Binding ClearSelectedLogsCommand}" Classes="Danger"/>
+                        <Button Content="Clear All" Command="{Binding ClearAllLogsCommand}" Classes="Danger"/>
+                    </StackPanel>
+                </Grid>
             </Border>
             
             <!-- Output Log Table-->
@@ -23,7 +48,7 @@
                       BorderBrush="{DynamicResource BorderCardBorderBrush}"
                       BorderThickness="1"
                       CornerRadius="4"
-                      ItemsSource="{Binding LogEntries}"
+                      ItemsSource="{Binding FilteredLogEntries}"
                       behavior:DataGridSelectedItemsBehavior.SelectedItems="{Binding SelectedLogEntries}"
                       IsReadOnly="True"
                       Focusable="False"
@@ -31,9 +56,9 @@
                       GridLinesVisibility="Horizontal"
                       HorizontalScrollBarVisibility="Disabled">
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="Timestamp"
+                    <DataGridTextColumn Header="Time"
                                         Binding="{Binding Timestamp, StringFormat='{}{0:t}'}"
-                                        Width="100"/>
+                                        Width="80"/>
                     <DataGridTemplateColumn Header="Level">
                         <DataTemplate DataType="{x:Type vm:OutputLogEntryViewModel}">
                             <Label Content="{Binding LogLevel, Converter={StaticResource LowerCaseConverter}}"
