@@ -5,9 +5,9 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.Extensions.DependencyInjection;
 using VisualRemux.App.ViewModels.Logging;
-using VisualRemux.App.ViewModels.Queue;
 using VisualRemux.App.ViewModels.Remux;
 using VisualRemux.App.ViewModels.Settings;
+using VisualRemux.App.ViewModels.Workflow;
 
 namespace VisualRemux.App.ViewModels;
 
@@ -22,7 +22,7 @@ public partial class MainWindowViewModel : ViewModelBase
 
     public MainWindowViewModel(IServiceProvider serviceProvider)
     {
-        SystemTools.Add(serviceProvider.GetRequiredService<WorkQueueViewModel>());
+        SystemTools.Add(serviceProvider.GetRequiredService<TaskQueueViewModel>());
         SystemTools.Add(serviceProvider.GetRequiredService<OutputLogViewModel>());
         SystemTools.Add(serviceProvider.GetRequiredService<ApplicationSettingsViewModel>());
 

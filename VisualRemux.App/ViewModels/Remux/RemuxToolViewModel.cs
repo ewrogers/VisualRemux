@@ -1,11 +1,15 @@
 using System;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Microsoft.Extensions.DependencyInjection;
 using VisualRemux.App.Logging;
+using VisualRemux.App.Models;
 using VisualRemux.App.Services;
+using VisualRemux.App.ViewModels.Workflow;
 
 namespace VisualRemux.App.ViewModels.Remux;
 
@@ -13,6 +17,7 @@ public partial class RemuxToolViewModel : ToolViewModel
 {
     private readonly ILogger _logger;
     private readonly IFileService _fileService;
+    private readonly TaskQueueViewModel _taskQueue;
     
     [ObservableProperty] private ObservableCollection<RemuxFileViewModel> _inputFiles = [];
     
@@ -28,12 +33,15 @@ public partial class RemuxToolViewModel : ToolViewModel
     [ObservableProperty]
     private string _outputDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyVideos);
 
-    public RemuxToolViewModel(ILogger logger, IFileService fileService)
+    public RemuxToolViewModel(IServiceProvider serviceProvider)
     {
-        _logger = logger.Child(this);
-        _fileService = fileService;
-        
+        _logger = serviceProvider.GetRequiredService<ILogger>().Child(this);
+        _fileService = serviceProvider.GetRequiredService<IFileService>();
+        _taskQueue = serviceProvider.GetRequiredService<TaskQueueViewModel>();
+
         DisplayName = "Remux";
+
+        InputFiles.CollectionChanged += (_, _) => AddToQueueCommand.NotifyCanExecuteChanged();
         SelectedFiles.CollectionChanged += (_, _) => RemoveSelectedFilesCommand.NotifyCanExecuteChanged();
     }
 
@@ -47,9 +55,15 @@ public partial class RemuxToolViewModel : ToolViewModel
             return;
         }
 
-        foreach (var file in files)
+        foreach (var remuxFile in files)
         {
-            var viewModel = new RemuxFileViewModel(file.Path.LocalPath);
+            var inputPath = remuxFile.Path.LocalPath;
+            var inputFilename = Path.GetFileNameWithoutExtension(remuxFile.Path.LocalPath);
+
+            var outputFilename = $"{inputFilename}.{OutputFormat}";
+            var outputPath = Path.Join(OutputDirectory, outputFilename);
+
+            var viewModel = new RemuxFileViewModel(inputPath, outputPath, OutputFormat);
             InputFiles.Add(viewModel);
         }
     }
@@ -58,9 +72,9 @@ public partial class RemuxToolViewModel : ToolViewModel
     private void RemoveSelectedFiles()
     {
         // Make a defensive copy to avoid modifying the collection while removing items
-        foreach (var file in SelectedFiles.ToList())
+        foreach (var remuxFile in SelectedFiles.ToList())
         {
-            InputFiles.Remove(file);
+            InputFiles.Remove(remuxFile);
         }
 
         SelectedFiles.Clear();
@@ -81,11 +95,23 @@ public partial class RemuxToolViewModel : ToolViewModel
         OutputDirectory = folder.Path.LocalPath;
     }
 
-    public void AddFilesToQueue()
+    [RelayCommand(CanExecute = nameof(CanAddToQueue))]
+    private void AddToQueue()
     {
-        _logger.LogDebug("This is a debug message");
-        _logger.LogInfo("This is an info message");
-        _logger.LogWarn("This is a warning message");
-        _logger.LogError(new Exception("Something broke"), "This is an error message");
+        foreach (var remuxFile in InputFiles)
+        {
+            var taskParameters = new RemuxTaskParameters
+            {
+                InputFile = remuxFile.InputFilePath,
+                OutputFile = remuxFile.OutputFilePath,
+                OutputFormat = remuxFile.OutputFormat
+            };
+            
+            var taskViewModel = new RemuxTaskViewModel(taskParameters, _logger);
+            _taskQueue.Tasks.Add(taskViewModel);
+        }
+        InputFiles.Clear();
     }
+    
+    private bool CanAddToQueue() => InputFiles.Count > 0;
 }

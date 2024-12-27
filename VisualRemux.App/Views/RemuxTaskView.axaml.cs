@@ -4,9 +4,9 @@ using Avalonia.Markup.Xaml;
 
 namespace VisualRemux.App.Views;
 
-public partial class WorkQueueView : UserControl
+public partial class RemuxTaskView : UserControl
 {
-    public WorkQueueView()
+    public RemuxTaskView()
     {
         InitializeComponent();
     }

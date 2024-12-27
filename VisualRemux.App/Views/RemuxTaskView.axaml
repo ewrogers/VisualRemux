@@ -5,9 +5,7 @@
              xmlns:vm="clr-namespace:VisualRemux.App.ViewModels"
              mc:Ignorable="d"
              d:DesignWidth="800" d:DesignHeight="450"
-             x:Class="VisualRemux.App.Views.WorkQueueView"
-             x:DataType="vm:Queue.WorkQueueViewModel">
-    <Grid Margin="8">
-        <TextBlock Text="No Items in Queue" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-    </Grid>
+             x:Class="VisualRemux.App.Views.RemuxTaskView"
+             x:DataType="vm:Remux.RemuxTaskViewModel">
+    Welcome to Avalonia!
 </UserControl>

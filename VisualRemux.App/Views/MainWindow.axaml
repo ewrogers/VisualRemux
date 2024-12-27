@@ -75,8 +75,8 @@
                 <DataTemplate DataType="{x:Type vm:Remux.RemuxToolViewModel}">
                     <view:RemuxToolView/>
                 </DataTemplate>
-                <DataTemplate DataType="{x:Type vm:Queue.WorkQueueViewModel}">
-                    <view:WorkQueueView/>
+                <DataTemplate DataType="{x:Type vm:Workflow.TaskQueueViewModel}">
+                    <view:TaskQueueView/>
                 </DataTemplate>
                 <DataTemplate DataType="{x:Type vm:Logging.OutputLogViewModel}">
                     <view:OutputLogView/>

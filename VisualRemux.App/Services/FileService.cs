@@ -1,16 +1,14 @@
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Avalonia.Controls;
 using Avalonia.Platform.Storage;
 
 namespace VisualRemux.App.Services;
 
 public class FileService: IFileService
 {
-    private readonly Func<TopLevel> _topLevelResolver;
+    private readonly ITopLevelResolver _topLevelResolver;
 
-    public FileService(Func<TopLevel> topLevelResolver)
+    public FileService(ITopLevelResolver topLevelResolver)
     {
         _topLevelResolver = topLevelResolver;
     }
@@ -29,7 +27,7 @@ public class FileService: IFileService
             AllowMultiple = true,
         };
 
-        var topLevel = _topLevelResolver();
+        var topLevel = _topLevelResolver.GetTopLevel()!;
         var files = await topLevel.StorageProvider.OpenFilePickerAsync(options);
 
         return files.Count > 0 ? files : null;
@@ -42,7 +40,7 @@ public class FileService: IFileService
             Title = title,
         };
 
-        var topLevel = _topLevelResolver();
+        var topLevel = _topLevelResolver.GetTopLevel()!;
         var folders = await topLevel.StorageProvider.OpenFolderPickerAsync(options);
         return folders.Count > 0 ? folders[0] : null;
     }

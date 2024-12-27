@@ -106,7 +106,9 @@
                 BorderThickness="0,1, 0, 0"
                 Padding="16">
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Spacing="16">
-                <Button Content="Add Files to Queue" Command="{Binding AddFilesToQueue}"/>
+                <Button Content="Add Files to Queue"
+                        Command="{Binding AddToQueueCommand}"
+                        Padding="16,4"/>
             </StackPanel>
         </Border>
     </Grid>
