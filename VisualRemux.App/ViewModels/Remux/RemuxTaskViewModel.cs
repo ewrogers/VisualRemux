@@ -13,5 +13,7 @@ public partial class RemuxTaskViewModel : TaskViewModel
     {
         _parameters = parameters;
         _logger = logger;
+
+        IsCompleted = true;
     }
 }

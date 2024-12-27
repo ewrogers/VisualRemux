@@ -54,12 +54,12 @@ public class App : Application
         var services = new ServiceCollection();
 
         // Register view models
-        services.AddTransient<MainWindowViewModel>();
-        services.AddTransient<RemuxToolViewModel>();
-        services.AddTransient<TaskQueueViewModel>();
-        services.AddTransient<OutputLogViewModel>();
-        services.AddTransient<ApplicationSettingsViewModel>();
-
+        services.AddSingleton<MainWindowViewModel>();
+        services.AddSingleton<RemuxToolViewModel>();
+        services.AddSingleton<TaskQueueViewModel>();
+        services.AddSingleton<OutputLogViewModel>();
+        services.AddSingleton<ApplicationSettingsViewModel>();
+        
         // Register services
         services.AddSingleton<ILogger, Logger>();
         services.AddSingleton<ITopLevelResolver, TopLevelResolver>();
