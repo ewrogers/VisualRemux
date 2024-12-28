@@ -2,11 +2,19 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:converter="clr-namespace:VisualRemux.App.Converters"
              xmlns:vm="clr-namespace:VisualRemux.App.ViewModels"
              mc:Ignorable="d"
              d:DesignWidth="800" d:DesignHeight="450"
              x:Class="VisualRemux.App.Views.RemuxToolView"
              x:DataType="vm:Remux.RemuxToolViewModel">
+    <UserControl.Resources>
+        <converter:PluralizeConverter x:Key="FilePluralizeConverter"
+                                      SingularFormat="Add {0} File to Queue"
+                                      PluralFormat="Add {0} Files to Queue"
+                                      ZeroFormat="No Files to Add"/>    
+    </UserControl.Resources>
+    
     <Grid RowDefinitions="* Auto">
         <!-- Scrollable Content Area -->
         <ScrollViewer Grid.Row="0" HorizontalScrollBarVisibility="Disabled" Padding="0,0,8,0">
@@ -106,9 +114,10 @@
                 BorderThickness="0,1, 0, 0"
                 Padding="16">
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Spacing="16">
-                <Button Content="Add Files to Queue"
-                        Command="{Binding AddToQueueCommand}"
-                        Padding="16,4"/>
+                <Button Command="{Binding AddToQueueCommand}"
+                        Padding="16,4">
+                    <TextBlock Text="{Binding InputFiles.Count, Converter={StaticResource FilePluralizeConverter}}"/>
+                </Button>
             </StackPanel>
         </Border>
     </Grid>
