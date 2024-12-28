@@ -13,9 +13,25 @@
             Margin="16">
         <Grid RowDefinitions="Auto Auto *">
             <DockPanel Grid.Row="0" Margin="8">
-                <TextBlock Text="Task Queue" FontWeight="Bold" VerticalAlignment="Center" Margin="8,0"/>
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Spacing="4" Margin="8,0">
+                    <TextBlock Text="Task Queue" FontWeight="Bold" VerticalAlignment="Center"/>
+                    <Label Content="Running" Theme="{DynamicResource TagLabel}" Classes="Green"
+                           IsVisible="{Binding IsRunning}"
+                           VerticalAlignment="Center"/>
+                    <Label Content="Paused" Theme="{DynamicResource TagLabel}" Classes="Amber"
+                           IsVisible="{Binding IsPaused}"
+                           VerticalAlignment="Center"/>
+                </StackPanel>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Spacing="8">
-                    <Button Content="Clear Completed" Command="{Binding ClearCompletedCommand}" Classes="Success"/>
+                    <Button Content="Start Queue"
+                            Command="{Binding StartQueueCommand}"
+                            IsVisible="{Binding !IsRunning}"
+                            Classes="Success"/>
+                    <Button Content="Pause Queue"
+                            Command="{Binding PauseQueueCommand}"
+                            IsVisible="{Binding IsRunning}"
+                            Classes="Warning"/>
+                    <Button Content="Clear Completed" Command="{Binding ClearCompletedCommand}" Classes="Primary"/>
                 </StackPanel>
             </DockPanel>
             

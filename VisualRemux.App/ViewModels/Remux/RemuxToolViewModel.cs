@@ -19,7 +19,8 @@ public partial class RemuxToolViewModel : ToolViewModel
     private readonly IFileService _fileService;
     private readonly TaskQueueViewModel _taskQueue;
     
-    [ObservableProperty] private ObservableCollection<RemuxFileViewModel> _inputFiles = [];
+    [ObservableProperty]
+    private ObservableCollection<RemuxFileViewModel> _inputFiles = [];
     
     [ObservableProperty]
     private ObservableCollection<RemuxFileViewModel> _selectedFiles = [];
